@@ -4,16 +4,19 @@ namespace App\Console\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 
+/**
+ * Class KeyGenerateCommand
+ * @package App\Console\Commands
+ */
 class KeyGenerateCommand extends Command
 {
     /**
-     * The console command name.
+     * The name and signature of the console command.
      *
      * @var string
      */
-    protected $name = 'key:generate';
+    protected $signature = 'key:generate {--show=false}';
 
     /**
      * The console command description.
@@ -27,12 +30,13 @@ class KeyGenerateCommand extends Command
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $key = $this->getRandomKey();
+        $appKey = 'base64:' . $key;
 
-        if ($this->option('show')) {
-            return $this->line('<comment>'.$key.'</comment>');
+        if ($this->option('show') === null) {
+            $this->line('<comment>' . $key . '</comment>');
         }
 
         $path = base_path('.env');
@@ -40,7 +44,7 @@ class KeyGenerateCommand extends Command
         if (file_exists($path)) {
             file_put_contents(
                 $path,
-                str_replace(env('APP_KEY'), $key, file_get_contents($path))
+                preg_replace('/(APP_KEY=)(\s|.*)\n/', ("APP_KEY={$appKey}\n"), file_get_contents($path))
             );
         }
 
@@ -54,18 +58,6 @@ class KeyGenerateCommand extends Command
      */
     protected function getRandomKey()
     {
-        return Str::random(32);
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return array(
-            array('show', null, InputOption::VALUE_NONE, 'Simply display the key instead of modifying files.'),
-        );
+        return Str::random(64);
     }
 }
