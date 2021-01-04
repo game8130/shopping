@@ -61,6 +61,8 @@ $app->singleton(
 
 $app->configure('app');
 $app->configure('default');
+$app->configure('captcha');
+$app->configure('geoip');
 
 /*
 |--------------------------------------------------------------------------
@@ -99,6 +101,14 @@ $app->configure('default');
 // composer require tymon/jwt-auth
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+// composer require youngyezi/captcha
+$app->register(Youngyezi\Captcha\CaptchaServiceProvider::class);
+// 添加别名
+$app->alias('captcha', 'Youngyezi\Captcha\CaptchaServiceProvider');
+// composer require torann/geoip
+$app->register(Torann\GeoIP\GeoIPServiceProvider::class);
+$app->alias('GeoIP', Torann\GeoIP\Facades\GeoIP::class);
+
 
 /*
 |--------------------------------------------------------------------------
