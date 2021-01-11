@@ -26,5 +26,8 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
     $router->group(['namespace' => 'System'], function () use ($router) {
         // 登入
         $router->post('login', 'SystemController@login');
+        // 註冊
+        $router->post('register', 'SystemController@register');
+
     });
 });

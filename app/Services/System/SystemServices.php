@@ -3,8 +3,9 @@
 namespace App\Services\System;
 
 use App\Repositories\User\UsersRepository;
-use App\Repositories\Group\GroupsRepository;
+use App\Repositories\Level\LevelsRepository;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\JWTAuth;
@@ -15,22 +16,21 @@ class SystemServices
     protected $JWTAuth;
 
     private $usersRepository;
-    private $groupsRepository;
+    private $levelsRepository;
     private $systemLoginServices;
 
     public function __construct(
         JWTAuth $JWTAuth,
         UsersRepository $usersRepository,
-        GroupsRepository $groupsRepository,
+        LevelsRepository $levelsRepository,
         SystemLoginServices $systemLoginServices
 
     ) {
         $this->JWTAuth = $JWTAuth;
         $this->usersRepository = $usersRepository;
-        $this->groupsRepository = $groupsRepository;
+        $this->levelsRepository = $levelsRepository;
         $this->systemLoginServices = $systemLoginServices;
     }
-
 
     /**
      * 登入驗證
@@ -66,8 +66,42 @@ class SystemServices
             $user['user'] = $this->JWTAuth->setToken($user['token'])->toUser();
             // 黑名單之前 token
 //            $this->JWTAuth->setToken($user['user']['token'])->invalidate();
-            $this->usersRepository->update($user['user']->id, ['token' => $user['token']]);
+            $this->usersRepository->update($user['user']->id, ['token' => $user['token'], 'login_at' => Carbon::now()->toDateTimeString()]);
             $this->systemLoginServices->storeLogin(['id' => $user['user']->id, 'account' => $request['account']], $ip);
+            return [
+                'code'   => config('apiCode.success'),
+                'result' => $user,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'code'  => $e->getCode() ?? config('apiCode.notAPICode'),
+                'error' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * 註冊
+     *
+     * @param  array  $request
+     * @return array
+     */
+    public function register(array $request)
+    {
+        try {
+            $level = $this->levelsRepository->checkFieldExist('name', config('default.levels')[0]['name']);
+            $user = $this->usersRepository->store([
+                'level_id'      => $level[0]->id,
+                'uuid'          => (string) Str::uuid(),
+                'account'       => $request['account'],
+                'email'         => $request['email'],
+                'password'      => app('hash')->make(config('default.adminPassword')),
+                'name'          => $request['name'],
+                'active'        => 1,
+                'token'         => '',
+                'phone'         => $request['phone'],
+            ]);
+
             return [
                 'code'   => config('apiCode.success'),
                 'result' => $user,

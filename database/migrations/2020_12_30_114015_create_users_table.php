@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone', 30)->unique()->comment('電話');
             $table->string('password', 60)->comment('密碼');
-            $table->string('name', 20)->comment('暱稱');
+            $table->string('name', 30)->comment('暱稱');
             $table->longText('token')->comment('登入Token');
             $table->unsignedTinyInteger('active')->default(1)->comment('狀態(1:啟用,2:停用,3:刪除)');
             $table->dateTime('login_at')->nullable()->comment('最後登入時間');

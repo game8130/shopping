@@ -27,6 +27,7 @@ class SystemController extends Controller
 
     /**
      * 登入驗證
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
@@ -42,5 +43,24 @@ class SystemController extends Controller
             'captcha.captcha_api' => '驗證碼錯誤'
         ]);
         return $this->responseWithJson($request, $this->systemsServices->login($request->all(), $request->ip()));
+    }
+
+    /**
+     * 註冊
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'account'               => 'required|between:3,20|unique:users,account',
+            'email'                 => 'required|email|unique:users,email',
+            'phone'                 => 'required|max:10|unique:users,phone',
+            'name'                  => 'required|max:30',
+            'password'              => 'required|alpha_dash|between:6,20|confirmed',
+        ]);
+        return $this->responseWithJson($request, $this->systemsServices->register($request->all()));
     }
 }

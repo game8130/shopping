@@ -19,7 +19,7 @@ class Users extends LumenShoppingModel implements AuthenticatableContract, Autho
 
     protected $fillable = [
         'level_id', 'uuid', 'account', 'email', 'email_verified_at', 'password', 'name',
-        'token', 'active', 'login_at', 'remember_token'
+        'token', 'active', 'login_at', 'remember_token', 'phone'
     ];
     protected $hidden = ['password', 'token', 'remember_token'];
 
