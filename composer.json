@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "jenssegers/agent": "^2.6",
         "laravel/lumen-framework": "^8.0",
         "torann/geoip": "^3.0",
         "tymon/jwt-auth": "^1.0",
@@ -24,7 +25,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Support/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
