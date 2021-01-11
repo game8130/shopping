@@ -17,10 +17,11 @@ class CreateUsersTable extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
             $table->string('uuid', 36)->unique()->comment('uuid');
-            $table->unsignedSmallInteger('group_id')->comment('權限 groups>id');
+            $table->unsignedSmallInteger('level_id')->comment('消費等級 level>id');
             $table->string('account', 20)->unique()->comment('帳號');
             $table->string('email')->unique()->comment('Email');
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone', 30)->unique()->comment('電話');
             $table->string('password', 60)->comment('密碼');
             $table->string('name', 20)->comment('暱稱');
             $table->longText('token')->comment('登入Token');

@@ -16,3 +16,15 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'api/v1'], function () use ($router) {
+    // 驗證碼
+    $router->get('captcha', function () use ($router) {
+        return app('captcha')->create('math');
+    });
+
+    $router->group(['namespace' => 'System'], function () use ($router) {
+        // 登入
+        $router->post('login', 'SystemController@login');
+    });
+});

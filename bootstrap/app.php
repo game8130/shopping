@@ -25,7 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withFacades();
 
-// $app->withEloquent();
+ $app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -60,9 +60,11 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('auth');
 $app->configure('default');
 $app->configure('captcha');
 $app->configure('geoip');
+$app->configure('apiCode');
 
 /*
 |--------------------------------------------------------------------------
@@ -95,19 +97,21 @@ $app->configure('geoip');
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+ $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 // composer require tymon/jwt-auth
-$app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 // composer require youngyezi/captcha
 $app->register(Youngyezi\Captcha\CaptchaServiceProvider::class);
 // 添加别名
-$app->alias('captcha', 'Youngyezi\Captcha\CaptchaServiceProvider');
+//$app->alias('captcha', 'Youngyezi\Captcha\CaptchaServiceProvider');
 // composer require torann/geoip
 $app->register(Torann\GeoIP\GeoIPServiceProvider::class);
-$app->alias('GeoIP', Torann\GeoIP\Facades\GeoIP::class);
+//$app->alias('GeoIP', Torann\GeoIP\Facades\GeoIP::class);
+// composer require jenssegers/agent
+$app->register(Jenssegers\Agent\AgentServiceProvider::class);
+//$app->alias('Agent', Jenssegers\Agent\Facades\Agent::class);
 
 
 /*
