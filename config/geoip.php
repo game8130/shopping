@@ -124,8 +124,7 @@ return [
     |
     */
 
-//    'cache_tags' => ['torann-geoip-location'],
-    'cache_tags' => false,
+    'cache_tags' => env('CACHE_DRIVER', 'array') === "file" ? null : ['torann-geoip-location'],
 
     /*
     |--------------------------------------------------------------------------
