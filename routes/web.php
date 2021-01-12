@@ -30,4 +30,12 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->post('register', 'SystemController@register');
 
     });
+    $router->group(['middleware' => ['auth.jwt', 'auth']], function () use ($router) {
+        $router->group(['namespace' => 'User'], function() use ($router) {
+            // 登入後檢查
+            $router->get('/auth', 'UserController@information');
+            // 系統登出
+            $router->post('/logout', 'UserController@logout');
+        });
+    });
 });

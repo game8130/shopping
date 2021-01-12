@@ -23,7 +23,7 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+ $app->withFacades();
 
  $app->withEloquent();
 
@@ -83,6 +83,7 @@ $app->configure('apiCode');
 
  $app->routeMiddleware([
      'auth' => App\Http\Middleware\Authenticate::class,
+     'auth.jwt'  => Tymon\JWTAuth\Http\Middleware\Authenticate::class,
  ]);
 
 /*
@@ -113,6 +114,9 @@ $app->register(Torann\GeoIP\GeoIPServiceProvider::class);
 $app->register(Jenssegers\Agent\AgentServiceProvider::class);
 //$app->alias('Agent', Jenssegers\Agent\Facades\Agent::class);
 
+if (!class_exists('JWTAuth')) {
+    class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
+}
 
 /*
 |--------------------------------------------------------------------------
