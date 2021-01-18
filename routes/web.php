@@ -28,6 +28,26 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->post('login', 'SystemController@login');
         // 註冊
         $router->post('register', 'SystemController@register');
+    });
 
+    // 商品類別
+    $router->group(['namespace' => 'Category', 'prefix' => 'category'], function () use ($router) {
+        // 查詢
+        $router->get('/', 'Category1Controller@index');
+        // 新增
+        $router->post('/', 'Category1Controller@store');
+        // 修改
+        $router->put('/{id}', 'Category1Controller@update');
+        // 刪除
+        $router->delete('/{id}', 'Category1Controller@destroy');
+    });
+
+    $router->group(['middleware' => ['auth.jwt', 'auth']], function () use ($router) {
+        $router->group(['namespace' => 'User'], function() use ($router) {
+            // 登入後檢查
+            $router->get('/auth', 'UserController@information');
+            // 系統登出
+            $router->post('/logout', 'UserController@logout');
+        });
     });
 });

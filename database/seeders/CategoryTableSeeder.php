@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
-class Category1TableSeeder extends Seeder
+class CategoryTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,6 +27,7 @@ class Category1TableSeeder extends Seeder
                     foreach($category['category2'] as $value) {
                         DB::table('category2')->insertGetId([
                             'category1_id' => $category1Id,
+                            'uuid'         => (string) Str::uuid(),
                             'name'         => $value,
                             'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
                             'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
