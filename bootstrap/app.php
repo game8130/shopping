@@ -65,6 +65,7 @@ $app->configure('default');
 $app->configure('captcha');
 $app->configure('geoip');
 $app->configure('apiCode');
+$app->configure('common');
 
 /*
 |--------------------------------------------------------------------------

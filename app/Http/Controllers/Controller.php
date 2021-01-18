@@ -69,6 +69,7 @@ class Controller extends BaseController
             $this->addErrorLog($param['statusCode'], $request, $param['response'], $error);
             if (config('common.APP_DEBUG') == true) {
                 $param['response']['error'] = $error;
+                unset($param['response']['result']);
             }
         }
         if (isset($info['other']) && $info['other'] != '') {
