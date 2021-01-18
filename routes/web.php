@@ -30,7 +30,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->post('register', 'SystemController@register');
     });
 
-    // 商品類別
+    // 商品類別-階層1
     $router->group(['namespace' => 'Category', 'prefix' => 'category'], function () use ($router) {
         // 查詢
         $router->get('/', 'Category1Controller@index');
@@ -40,6 +40,17 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->put('/{id}', 'Category1Controller@update');
         // 刪除
         $router->delete('/{id}', 'Category1Controller@destroy');
+    });
+    // 商品類別-階層2
+    $router->group(['namespace' => 'Category', 'prefix' => 'category2'], function () use ($router) {
+        // 查詢
+        $router->get('/', 'Category2Controller@index');
+        // 新增
+        $router->post('/', 'Category2Controller@store');
+        // 修改
+        $router->put('/{id}', 'Category2Controller@update');
+        // 刪除
+        $router->delete('/{id}', 'Category2Controller@destroy');
     });
 
     $router->group(['middleware' => ['auth.jwt', 'auth']], function () use ($router) {
