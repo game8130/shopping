@@ -13,4 +13,11 @@ class Category1Repository
     {
         $this->setEntity(Category1::class);
     }
+
+    public function getWithAll()
+    {
+        return Category1::with(['category2' => function ($query) {
+            $query->with(['category3']);
+        }])->get();
+    }
 }

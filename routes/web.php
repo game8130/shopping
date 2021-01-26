@@ -30,6 +30,12 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->post('register', 'SystemController@register');
     });
 
+    // 前台商品類別
+    $router->group(['namespace' => 'Category', 'prefix' => 'category'], function () use ($router) {
+        // 查詢
+        $router->get('/', 'CategoryController@index');
+    });
+
     // 商品類別1
     $router->group(['namespace' => 'Category', 'prefix' => 'category1'], function () use ($router) {
         // 查詢
