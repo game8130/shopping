@@ -4,18 +4,26 @@ namespace App\Services\Category;
 
 use App\Repositories\Category\Category1Repository;
 use App\Repositories\Category\Category2Repository;
+use App\Repositories\Category\Category3Repository;
+use App\Repositories\Category\Category2NameRepository;
 
-class Category1Services
+class Category2Services
 {
     private $category1Repository;
     private $category2Repository;
+    private $category3Repository;
+    private $category2NameRepository;
 
     public function __construct(
         Category1Repository $category1Repository,
-        Category2Repository $category2Repository
+        Category2Repository $category2Repository,
+        Category3Repository $category3Repository,
+        Category2NameRepository $category2NameRepository
     ) {
         $this->category1Repository = $category1Repository;
         $this->category2Repository = $category2Repository;
+        $this->category3Repository = $category3Repository;
+        $this->category2NameRepository = $category2NameRepository;
     }
 
     /**
@@ -27,7 +35,7 @@ class Category1Services
         try {
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->category1Repository->getAll(),
+                'result' => $this->category2Repository->getWithAll(),
             ];
         } catch (\Exception $e) {
             return [
@@ -44,9 +52,13 @@ class Category1Services
     public function store(array $request)
     {
         try {
+            $category2Name = $this->category2NameRepository->firstOrCreate(['category2_name' => $request['category2_name']]);
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->category1Repository->store(['category1_name' => $request['category1_name']]),
+                'result' => $this->category2Repository->store([
+                    'category2_name_id' => $category2Name['id'],
+                    'category1_id' => $request['category1_id'],
+                ]),
             ];
         } catch (\Exception $e) {
             return [
@@ -63,9 +75,13 @@ class Category1Services
     public function update(array $request)
     {
         try {
+            $category2Name = $this->category2NameRepository->firstOrCreate(['category2_name' => $request['category2_name']]);
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->category1Repository->update($request['id'], ['category1_name' => $request['category1_name']]),
+                'result' => $this->category2Repository->update($request['id'], [
+                    'category1_id' => $request['category1_id'],
+                    'category2_name_id' => $category2Name['id']
+                ]),
             ];
         } catch (\Exception $e) {
             return [
@@ -82,13 +98,13 @@ class Category1Services
     public function destroy(array $request)
     {
         try {
-            $category2 = $this->category2Repository->checkFieldExist('category1_id', $request['id']);
-            if ($category2->count() != 0) {
+            $category3 = $this->category3Repository->checkFieldExist('category2_id', $request['id']);
+            if ($category3->count() != 0) {
                 throw new \Exception('還有資料不可以刪除', config('apiCode.notRemove'));
             }
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->category1Repository->destroy($request['id']),
+                'result' => $this->category3Repository->destroy($request['id']),
             ];
         } catch (\Exception $e) {
             return [

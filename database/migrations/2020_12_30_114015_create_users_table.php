@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->id();
             $table->string('uuid', 36)->unique()->comment('uuid');
+            $table->unsignedSmallInteger('group_id')->comment('權限管理 group>id');
             $table->unsignedSmallInteger('level_id')->comment('消費等級 level>id');
             $table->string('account', 20)->unique()->comment('帳號');
             $table->string('email')->unique()->comment('Email');
