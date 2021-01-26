@@ -17,8 +17,9 @@ class CreateProductTable extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->Increments('id')->comment('PK');
             $table->string('uuid', 36)->unique()->comment('uuid');
-            $table->unsignedSmallInteger('category1_id')->comment('類別階層1 category1>id');
-            $table->unsignedSmallInteger('category2_id')->comment('類別階層2 category2>id');
+            // $table->unsignedSmallInteger('category1_id')->comment('類別階層1 category1>id');
+            // $table->unsignedSmallInteger('category2_id')->comment('類別階層2 category2>id');
+            $table->unsignedSmallInteger('category3_id')->comment('類別階層3 category3>id');
             $table->text('image')->nullable()->comment('商品縮圖');
             $table->string('name', 60)->comment('商品名稱');
             $table->text('description')->comment('商品說明');

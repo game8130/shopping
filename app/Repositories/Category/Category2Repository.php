@@ -13,4 +13,17 @@ class Category2Repository
     {
         $this->setEntity(Category2::class);
     }
+
+    /**
+     * @param array $parameters
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getWithAll()
+    {
+        // return Category2::join('category2_name', 'category2.category2_name_id', '=', 'category2_name.id')
+        // ->join('category1', 'category2.category1_id', '=', 'category1.id')
+        // ->select('category2.id', 'category2.category1_id', 'category2.category2_name_id', 'category2_name.category2_name', 'category1.category1_name')
+        // ->get();
+        return Category2::with(['category2_name', 'category1'])->get();
+    }
 }

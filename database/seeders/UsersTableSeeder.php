@@ -13,11 +13,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        $group = DB::table('groups')->where('name', config('default.adminGroupName'))->first();
         $level = DB::table('levels')->where('name', config('default.levels')[0]['name'])->first();
         $user = DB::table('users')->where('account', config('default.adminAccount'))->first();
-        if ($level !== null && $user === null) {
-            DB::transaction(function () use ($level) {
+        if ($level !== null && $group !== null && $user === null) {
+            DB::transaction(function () use ($group, $level) {
                 DB::table('users')->insert([
+                'group_id'        => $group->id,
                 'level_id'        => $level->id,
                 'uuid'            => (string) Str::uuid(),
                 'account'         => config('default.adminAccount'),

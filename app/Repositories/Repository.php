@@ -206,6 +206,15 @@ trait Repository
     }
 
     /**
+     * @param  array  $parameters [資料參數]
+     * @return mixed
+     */
+    public function firstOrCreate(array $parameters)
+    {
+        return $this->entity::firstOrCreate($parameters);
+    }
+
+    /**
      * 資料新增，存在則更新
      *
      * @param  array  $where      [條件]

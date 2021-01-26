@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Category;
 
-use App\Services\Category\Category1Services;
+use App\Services\Category\Category2Services;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 
-class Category1Controller extends Controller
+class Category2Controller extends Controller
 {
-    private $category1Services;
+    private $category2Services;
 
-    public function __construct(Category1Services $category1Services)
+    public function __construct(Category2Services $category2Services)
     {
-        $this->category1Services = $category1Services;
+        $this->category2Services = $category2Services;
     }
 
     /**
@@ -25,7 +25,7 @@ class Category1Controller extends Controller
      */
     public function index(Request $request)
     {
-        return $this->responseWithJson($request, $this->category1Services->index($request->all()));
+        return $this->responseWithJson($request, $this->category2Services->index($request->all()));
     }
 
     /**
@@ -38,9 +38,10 @@ class Category1Controller extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'category1_name' => 'required|max:30|unique:category1,category1_name',
+            'category1_id' => 'required|exists:category1,id',
+            'category2_name' => 'required|max:30',
         ]);
-        return $this->responseWithJson($request, $this->category1Services->store($request->all()));
+        return $this->responseWithJson($request, $this->category2Services->store($request->all()));
     }
 
     /**
@@ -55,10 +56,11 @@ class Category1Controller extends Controller
     {
         $request['id'] = $id;
         $this->validate($request, [
-            'id'   => 'required|exists:category1',
-            'category1_name' => ['required', Rule::unique('category1')->ignore($id)],
+            'id'   => 'required|exists:category2',
+            'category1_id' => 'required|exists:category1,id',
+            'category2_name' => 'required|max:30',
         ]);
-        return $this->responseWithJson($request, $this->category1Services->update($request->all()));
+        return $this->responseWithJson($request, $this->category2Services->update($request->all()));
     }
 
     /**
@@ -73,8 +75,8 @@ class Category1Controller extends Controller
     {
         $request['id'] = $id;
         $this->validate($request, [
-            'id' => 'required|exists:category1',
+            'id' => 'required|exists:category2',
         ]);
-        return $this->responseWithJson($request, $this->category1Services->destroy($request->all()));
+        return $this->responseWithJson($request, $this->category2Services->destroy($request->all()));
     }
 }

@@ -16,7 +16,7 @@ class CreateCategory1Table extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->smallIncrements('id')->comment('PK');
-            $table->string('name', 30)->unique()->comment('名稱');
+            $table->string('category1_name', 30)->unique()->comment('名稱');
             $table->timestamps();
         });
         DB::statement("ALTER TABLE `" . $this->table . "` COMMENT '類別階層1'");

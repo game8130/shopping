@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategory2Table extends Migration
+class CreateCategory2NameTable extends Migration
 {
-    private $table = 'category2';
+    private $table = 'category2_name';
     /**
      * Run the migrations.
      *
@@ -16,11 +16,10 @@ class CreateCategory2Table extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->smallIncrements('id')->comment('PK');
-            $table->unsignedSmallInteger('category1_id')->comment('類別階層1 category1>id');
-            $table->unsignedSmallInteger('category2_name_id')->comment('類別階層2 category2_name>id');
+            $table->string('category2_name', 30)->unique()->comment('名稱');
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE `" . $this->table . "` COMMENT '類別階層2'");
+        DB::statement("ALTER TABLE `" . $this->table . "` COMMENT '類別階層2名稱'");
     }
 
     /**
