@@ -91,6 +91,7 @@ class SystemServices
         try {
             $level = $this->levelsRepository->checkFieldExist('name', config('default.levels')[0]['name']);
             $user = $this->usersRepository->store([
+                'group_id'      => $request['group_id'],
                 'level_id'      => $level[0]->id,
                 'uuid'          => (string) Str::uuid(),
                 'account'       => $request['account'],
