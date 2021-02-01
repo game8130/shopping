@@ -72,6 +72,12 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->delete('/{id}', 'Category3Controller@destroy');
     });
 
+    // 商品列表
+    $router->group(['namespace' => 'Product', 'prefix' => 'product'], function () use ($router) {
+        // 查詢
+        $router->get('/{category3_uuid}', 'ProductController@index');
+    });
+
     $router->group(['middleware' => ['auth.jwt', 'auth']], function () use ($router) {
         $router->group(['namespace' => 'User'], function() use ($router) {
             // 登入後檢查
