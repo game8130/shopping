@@ -80,4 +80,15 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
             $router->post('/logout', 'UserController@logout');
         });
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | 系統相關(已登入)
+    |--------------------------------------------------------------------------
+    */
+    // 下拉式選單
+    $router->group(['namespace' => 'Dropdown', 'prefix' => 'dropdown'], function () use ($router) {
+        // 通用設定檔
+        $router->get('/{method}', 'DropdownController@index');
+    });
 });
