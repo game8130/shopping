@@ -73,15 +73,15 @@ trait Repository
     }
 
     /**
-     * 取得單筆資料(用會員ID)
+     * 取得單筆資料(用商品uuid)
      *
-     * @param  integer   $memberId [會員ID]
-     * @param  array     $field    [要取得的欄位資料]
+     * @param  string   $uuid     [商品uuid]
+     * @param  array     $field   [要取得的欄位資料]
      * @return boolean
      */
-    public function findByUserID($memberId, $field = ['*'])
+    public function findByUUID($uuid, $field = ['*'])
     {
-        return $this->entity::select($field)->where('user_id', $memberId)->first();
+        return $this->entity::select($field)->where('uuid', $uuid)->first();
     }
 
     /**
