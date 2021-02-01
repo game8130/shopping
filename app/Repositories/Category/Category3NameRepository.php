@@ -13,4 +13,14 @@ class Category3NameRepository
     {
         $this->setEntity(Category3Name::class);
     }
+
+    /**
+     * 取得下拉式選單資料
+     *
+     * @return array
+     */
+    public function dropdown()
+    {
+        return Category3Name::select('id', 'category3_name as name')->orderBy('id', 'ASC')->get()->toArray();
+    }
 }
