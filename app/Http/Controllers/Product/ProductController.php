@@ -32,4 +32,20 @@ class ProductController extends Controller
         return $this->responseWithJson($request, $this->productServices->index($request->all()));
     }
 
+    /**
+     * 詳情
+     *
+     * @param Request $request
+     * @param $product_uuid
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function detail(Request $request, $product_uuid)
+    {
+        $request['uuid'] = $product_uuid;
+        $this->validate($request, [
+            'uuid' => 'required|exists:product,uuid',
+        ]);
+        return $this->responseWithJson($request, $this->productServices->detail($request->all()));
+    }
 }
