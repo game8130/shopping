@@ -13,9 +13,9 @@ class Category3Repository
     {
         $this->setEntity(Category3::class);
     }
+
     /**
-     * @param array $parameters
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
     public function getWithAll()
     {

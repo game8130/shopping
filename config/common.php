@@ -7,4 +7,12 @@ return [
     'APP_DEBUG'          => env('APP_DEBUG'),
     'APP_URL'            => env('APP_URL'),
     'APP_TIMEZONE'       => env('APP_TIMEZONE'),
+    // 後台
+    'admin' => [
+        'paginate' => 8, // 列表一頁顯示的資料筆數
+    ],
+    // 前台
+    'web' => [
+        'paginate' => 8, // 列表一頁顯示的資料筆數
+    ],
 ];
