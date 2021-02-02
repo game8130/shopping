@@ -3,19 +3,14 @@
 namespace App\Services\ShoppingCart;
 
 use App\Repositories\ShoppingCart\ShoppingCartRepository;
-use Tymon\JWTAuth\JWTAuth;
 
 class ShoppingCartServices
 {
-    protected $JWTAuth;
-
     private $shoppingCartRepository;
 
     public function __construct(
-        JWTAuth $JWTAuth,
         ShoppingCartRepository $shoppingCartRepository
     ) {
-        $this->JWTAuth = $JWTAuth;
         $this->shoppingCartRepository = $shoppingCartRepository;
     }
 
@@ -26,10 +21,9 @@ class ShoppingCartServices
     public function index(array $request)
     {
         try {
-            $user = $this->JWTAuth->parseToken()->authenticate();
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->shoppingCartRepository->getWithProduct($user['id']),
+                'result' => $this->shoppingCartRepository->getWithProduct($request['jwt_user']['id']),
             ];
         } catch (\Exception $e) {
             return [
@@ -46,11 +40,10 @@ class ShoppingCartServices
     public function store(array $request)
     {
         try {
-            $user = $this->JWTAuth->parseToken()->authenticate();
-            $shopping = $this->shoppingCartRepository->firstWhereUserId($user['id'], $request['uuid']);
+            $shopping = $this->shoppingCartRepository->firstWhereUserId($request['jwt_user']['id'], $request['uuid']);
             if(empty($shopping)) {
                 $this->shoppingCartRepository->store([
-                    'user_id' => $user['id'],
+                    'user_id' => $request['jwt_user']['id'],
                     'product_uuid' => $request['uuid'],
                     'number' => $request['number'],
                 ]);
@@ -62,6 +55,25 @@ class ShoppingCartServices
             return [
                 'code'   => config('apiCode.success'),
                 'result' => true
+            ];
+        } catch (\Exception $e) {
+            return [
+                'code'  => $e->getCode() ?? config('apiCode.notAPICode'),
+                'error' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * @param array $request
+     * @return array
+     */
+    public function destroy(array $request)
+    {
+        try {
+            return [
+                'code'   => config('apiCode.success'),
+                'result' => $this->shoppingCartRepository->destroy($request['id'])
             ];
         } catch (\Exception $e) {
             return [

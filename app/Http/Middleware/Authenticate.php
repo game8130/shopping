@@ -41,7 +41,7 @@ class Authenticate
         } elseif (JWTAuth::getToken() != $this->auth->user()->token) {
             return response('Unauthorized.', 401);
         }
-
+        $request['jwt_user'] = JWTAuth::parseToken()->authenticate()->toArray();
         return $next($request);
     }
 }

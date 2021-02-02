@@ -94,6 +94,8 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
             $router->get('/', 'ShoppingCartController@index');
             // 新增
             $router->post('/', 'ShoppingCartController@store');
+            // 刪除
+            $router->delete('/{id}', 'ShoppingCartController@destroy');
         });
     });
 
