@@ -13,6 +13,6 @@ class Category1 extends LumenShoppingModel
     {
         return $this->hasMany(Category2::class, 'category1_id' , 'id')
             ->join('category2_name', 'category2.category2_name_id', '=', 'category2_name.id')
-            ->select(['category2.*', 'category2_name.category2_name']);
+            ->select(['category2.*', 'category2_name.category2_name as name']);
     }
 }
