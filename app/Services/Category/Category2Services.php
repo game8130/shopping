@@ -104,7 +104,7 @@ class Category2Services
             }
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->category3Repository->destroy($request['id']),
+                'result' => $this->category2Repository->destroy($request['id']),
             ];
         } catch (\Exception $e) {
             return [
