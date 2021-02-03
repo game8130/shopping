@@ -36,7 +36,7 @@ class Category3Services
         try {
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->category3Repository->getWithAll(),
+                'result' => $this->category3Repository->getJoinAll(),
             ];
         } catch (\Exception $e) {
             return [
