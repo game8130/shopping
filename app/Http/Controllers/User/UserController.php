@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function information(Request $request)
     {
-        return $this->responseWithJson($request, $this->userServices->information());
+        return $this->responseWithJson($request, $this->userServices->information($request->all()));
     }
 
     /**

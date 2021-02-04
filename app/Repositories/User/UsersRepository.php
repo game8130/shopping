@@ -31,7 +31,7 @@ class UsersRepository
      */
     public function firstByUuidWith($uuid)
     {
-        return Users::where('uuid', $uuid)->with(['group', 'group_role', 'information'])->first();
+        return Users::where('uuid', $uuid)->with(['group', 'level'])->first();
     }
 
     /**
