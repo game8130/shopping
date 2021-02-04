@@ -39,10 +39,11 @@ class UserServices
      *
      * @return array
      */
-    public function information()
+    public function information($request)
     {
         try {
-            $user = $this->JWTAuth->parseToken()->authenticate();
+            $user = $this->usersRepository->firstByUuidWith($request['jwt_user']['uuid']);
+            $user['active_name'] = config('common.status')[$user['active']];
             return [
                 'code'   => config('apiCode.success'),
                 'result' => $user,
