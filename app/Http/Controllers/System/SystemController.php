@@ -9,11 +9,11 @@ use App\Services\System\SystemServices;
 
 class SystemController extends Controller
 {
-    private $systemsServices;
+    private $systemServices;
 
-    public function __construct(SystemServices $SystemsServices)
+    public function __construct(SystemServices $SystemServices)
     {
-        $this->systemsServices = $SystemsServices;
+        $this->systemServices = $SystemServices;
     }
     /**
      * 自訂驗證
@@ -42,7 +42,7 @@ class SystemController extends Controller
         ],[
             'captcha.captcha_api' => '驗證碼錯誤'
         ]);
-        return $this->responseWithJson($request, $this->systemsServices->login($request->all(), $request->ip()));
+        return $this->responseWithJson($request, $this->systemServices->login($request->all(), $request->ip()));
     }
 
     /**
@@ -61,6 +61,6 @@ class SystemController extends Controller
             'name'     => 'required|max:30',
             'password' => 'required|alpha_dash|between:6,20|confirmed',
         ]);
-        return $this->responseWithJson($request, $this->systemsServices->register($request->all()));
+        return $this->responseWithJson($request, $this->systemServices->register($request->all()));
     }
 }
