@@ -82,7 +82,7 @@ class UserController extends Controller
             'uuid'     => 'required|exists:users,uuid',
             'group_id' => 'required|exists:groups,id',
             'level_id' => 'required|exists:levels,id',
-            'active'   => 'in:1,2,3',
+            'active'   => 'in:1,2',
             'password' => 'alpha_dash|between:6,20|confirmed|nullable',
             'name'     => 'max:20',
             'phone'    => 'required|numeric',
@@ -109,4 +109,27 @@ class UserController extends Controller
         ]);
         return $this->responseWithJson($request, $this->userServices->destroy($request->all()));
     }
+
+    /**
+     * 修改會員資料
+     *
+     * @param Request $request
+     * @param string  $uuid
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateInformation(Request $request)
+    {
+        $request['uuid'] = $request['jwt_user']['uuid'];
+        $this->validate($request, [
+            'password' => 'alpha_dash|between:6,20|confirmed|nullable',
+            'name'     => 'max:20',
+            'phone'    => 'required|numeric',
+            'email'    => [
+                'email',
+                Rule::unique('users', 'email')->ignore($request['uuid'], 'uuid')
+            ],
+        ]);
+        return $this->responseWithJson($request, $this->userServices->update($request->all()));
+    }
+    
 }

@@ -101,7 +101,7 @@ class SystemServices
                 'uuid'          => (string) Str::uuid(),
                 'account'       => $request['account'],
                 'email'         => $request['email'],
-                'password'      => app('hash')->make(config('default.adminPassword')),
+                'password'      => app('hash')->make($request['password']),
                 'name'          => $request['name'],
                 'active'        => 1,
                 'token'         => '',

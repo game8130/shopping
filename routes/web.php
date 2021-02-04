@@ -86,6 +86,8 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
             $router->get('/auth', 'UserController@information');
             // 系統登出
             $router->post('/logout', 'UserController@logout');
+            // 修改會員資料
+            $router->put('/user_information', 'UserController@updateInformation');
         });
         /*
         |--------------------------------------------------------------------------
