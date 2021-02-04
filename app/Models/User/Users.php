@@ -3,6 +3,7 @@
 namespace App\Models\User;
 
 use App\Models\Group\Groups;
+use App\Models\Level\Levels;
 use App\Models\LumenShoppingModel;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -54,19 +55,19 @@ class Users extends LumenShoppingModel implements AuthenticatableContract, Autho
         return [];
     }
 
-//    /**
-//     * 取得對應的權限資訊
-//     *
-//     * @return mixed
-//     */
-//    public function group()
-//    {
-//        return $this->belongsTo(Groups::class, 'group_id', 'id')->select(['id', 'name']);
-//    }
-//
-//    public function group_role()
-//    {
-//        return $this->belongsTo(GroupRole::class, 'group_role_id', 'id')->select(['id', 'name']);
-//    }
+   /**
+    * 取得對應的權限資訊
+    *
+    * @return mixed
+    */
+   public function group()
+   {
+       return $this->belongsTo(Groups::class, 'group_id', 'id')->select(['id', 'name']);
+   }
+
+   public function level()
+   {
+       return $this->belongsTo(levels::class, 'level_id', 'id')->select(['id', 'name', 'amount', 'amount_max']);
+   }
 
 }

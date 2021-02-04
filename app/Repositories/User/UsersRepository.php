@@ -21,8 +21,7 @@ class UsersRepository
      */
     public function list(array $parameters)
     {
-        $user = Users::select(['*'])->with('group')->with('group_role')->with('information')
-            ->orderBy('sort', 'DESC')->orderBy('id');
+        $user = Users::select(['*'])->with(['group', 'level']);
         return $this->sortByAndItemsPerPage($user, $parameters);
     }
 

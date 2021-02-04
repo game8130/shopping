@@ -87,6 +87,24 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
             // 系統登出
             $router->post('/logout', 'UserController@logout');
         });
+        /*
+        |--------------------------------------------------------------------------
+        | 人事管理系統
+        |--------------------------------------------------------------------------
+        */
+        // 人員管理
+        $router->group(['namespace' => 'User', 'prefix' => 'user'], function () use ($router) {
+            // 查詢
+            $router->get('/', 'UserController@index');
+            // 新增
+            $router->post('/', 'UserController@store');
+            // 修改
+            $router->put('/{uuid}', 'UserController@update');
+            // 刪除
+            $router->delete('/{uuid}', 'UserController@destroy');
+            // 取得單一資料
+            $router->get('/{uuid}', 'UserController@single');
+        });
 
         // 購物車
         $router->group(['namespace' => 'ShoppingCart', 'prefix' => 'shopping_cart'], function () use ($router) {
