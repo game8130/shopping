@@ -4,6 +4,7 @@ namespace App\Services\System;
 
 use App\Repositories\User\UsersRepository;
 use App\Repositories\Level\LevelsRepository;
+use App\Repositories\Group\GroupsRepository;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -17,18 +18,21 @@ class SystemServices
 
     private $usersRepository;
     private $levelsRepository;
+    private $groupsRepository;
     private $systemLoginServices;
 
     public function __construct(
         JWTAuth $JWTAuth,
         UsersRepository $usersRepository,
         LevelsRepository $levelsRepository,
+        GroupsRepository $groupsRepository,
         SystemLoginServices $systemLoginServices
 
     ) {
         $this->JWTAuth = $JWTAuth;
         $this->usersRepository = $usersRepository;
         $this->levelsRepository = $levelsRepository;
+        $this->groupsRepository = $groupsRepository;
         $this->systemLoginServices = $systemLoginServices;
     }
 
@@ -90,8 +94,9 @@ class SystemServices
     {
         try {
             $level = $this->levelsRepository->checkFieldExist('name', config('default.levels')[0]['name']);
+            $group = $this->groupsRepository->checkFieldExist('name', config('default.generalGroupName'));
             $user = $this->usersRepository->store([
-                'group_id'      => $request['group_id'],
+                'group_id'      => $group[0]->id,
                 'level_id'      => $level[0]->id,
                 'uuid'          => (string) Str::uuid(),
                 'account'       => $request['account'],

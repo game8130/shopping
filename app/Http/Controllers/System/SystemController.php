@@ -55,7 +55,6 @@ class SystemController extends Controller
     public function register(Request $request)
     {
         $this->validate($request, [
-            'group_id' => 'required|exists:groups,id',
             'account'  => 'required|between:3,20|unique:users,account',
             'email'    => 'required|email|unique:users,email',
             'phone'    => 'required|max:10|unique:users,phone',
