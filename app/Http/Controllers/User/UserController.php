@@ -131,5 +131,20 @@ class UserController extends Controller
         ]);
         return $this->responseWithJson($request, $this->userServices->update($request->all()));
     }
-    
+
+    /**
+     * 人員管理-取得單一資料
+     *
+     * @param Request $request
+     * @param string  $uuid
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function single(Request $request, $uuid)
+    {
+        $request['uuid'] = $uuid;
+        $this->validate($request, [
+            'uuid' => 'required|exists:users,uuid',
+        ]);
+        return $this->responseWithJson($request, $this->userServices->single($request->all()));
+    }
 }

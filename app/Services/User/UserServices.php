@@ -252,33 +252,6 @@ class UserServices
     {
         try {
             $user = $this->usersRepository->firstByUuidWith($request['uuid']);
-            $user['leave'] = null;
-            if (!empty($user['information']['annual_leave_date'])) {
-                $diffInDays = Carbon::today()->diffInDays($user['information']['annual_leave_date']);
-                if ($diffInDays < 183) {
-                    $startDate = Carbon::parse($user['information']['annual_leave_date'])->toDateString();
-                    $endDate = Carbon::parse($user['information']['annual_leave_date'])->addMonths(6)->subDay()->toDateString();
-                } else if ($diffInDays >= 183 && $diffInDays < 365) {
-                    $startDate = Carbon::parse($user['information']['annual_leave_date'])->addMonths(6)->toDateString();
-                    $endDate = Carbon::parse($user['information']['annual_leave_date'])->addYear()->subDay()->toDateString();
-                } else {
-                    $dt = Carbon::parse($user['information']['annual_leave_date']);
-                    $today = Carbon::today();
-                    if ($today->toDateString() >= Carbon::create($today->year, $dt->month, $dt->day)->toDateString()) {
-                        $startDate = Carbon::create($today->year, $dt->month, $dt->day)->toDateString();
-                        $endDate = Carbon::create($today->year, $dt->month, $dt->day)->addYear()->subDay()->toDateString();
-                    } else {
-                        $startDate = Carbon::create($today->year, $dt->month, $dt->day)->subYear()->toDateString();
-                        $endDate = Carbon::create($today->year, $dt->month, $dt->day)->subDay()->toDateString();
-                    }
-                }
-                $leaves = $this->leaveRepository->getByWhereInGroupLeaveId($user['id'], $startDate, $endDate);
-                $groupLeave = $this->groupLeaveRepository->getKeyById();
-                foreach ($leaves as $key => $value) {
-                    $leaves[$key]['name'] = $groupLeave[$value['group_leave_id']]['name'];
-                }
-                $user['leave'] = $leaves;
-            }
             return [
                 'code'   => config('apiCode.success'),
                 'result' => $user,
