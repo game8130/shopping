@@ -21,6 +21,6 @@ class LevelsRepository
      */
     public function dropdown()
     {
-        return Groups::select('id', 'name')->orderBy('id', 'DESC')->get()->toArray();
+        return Levels::select('id', 'name')->orderBy('id', 'ASC')->get()->toArray();
     }
 }

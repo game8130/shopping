@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class DropdownController extends Controller {
 
-    private $method = ['group', 'user', 'active', 'category1', 'category2', 'category3'];
+    private $method = ['group', 'user', 'active', 'level', 'category1', 'category2', 'category3'];
     private $dropdownServices;
 
     public function __construct(DropdownServices $dropdownServices)
