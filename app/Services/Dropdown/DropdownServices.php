@@ -7,6 +7,7 @@ use App\Repositories\User\UsersRepository;
 use App\Repositories\Category\Category1Repository;
 use App\Repositories\Category\Category2NameRepository;
 use App\Repositories\Category\Category3NameRepository;
+use App\Repositories\Level\LevelsRepository;
 use JWTAuth;
 
 class DropdownServices
@@ -16,19 +17,22 @@ class DropdownServices
     private $category1Repository;
     private $category2NameRepository;
     private $category3NameRepository;
+    private $levelsRepository;
 
     public function __construct(
         GroupsRepository $groupsRepository,
         UsersRepository $usersRepository,
         Category1Repository $category1Repository,
         Category2NameRepository $category2NameRepository,
-        Category3NameRepository $category3NameRepository
+        Category3NameRepository $category3NameRepository,
+        LevelsRepository $levelsRepository
     ) {
         $this->groupsRepository = $groupsRepository;
         $this->usersRepository = $usersRepository;
         $this->category1Repository = $category1Repository;
         $this->category2NameRepository = $category2NameRepository;
         $this->category3NameRepository = $category3NameRepository;
+        $this->levelsRepository = $levelsRepository;
     }
 
     /**
@@ -63,6 +67,13 @@ class DropdownServices
                             'name' => $value
                         ];
                     }
+                    break;
+                case 'level': // 會員等級
+                    $dropdown = $this->levelsRepository->dropdown();
+                    if ($param['all'] !== 'hide') {
+                        $dropdown = array_merge([['id' => 0, 'name' => '全部']], $dropdown);
+                    }
+                    break;
                 case 'category1':
                     $dropdown = $this->category1Repository->dropdown();
                     break;
