@@ -42,7 +42,7 @@ class ProductServices
         try {
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->productRepository->findByUUID($request['uuid']),
+                'result' => $this->productRepository->firstWhereUuidWith($request['uuid']),
             ];
         } catch (\Exception $e) {
             return [

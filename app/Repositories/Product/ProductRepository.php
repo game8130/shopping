@@ -24,4 +24,15 @@ class ProductRepository
             ->join('category3', 'category3.id', '=', 'product.category3_id')
             ->paginate(config('common.web.paginate'));
     }
+
+    /**
+     * @param $uuid
+     * @return mixed
+     */
+    public function firstWhereUuidWith($uuid)
+    {
+        return Product::where('uuid', $uuid)->with(['category3' => function ($query) {
+            $query->with(['category2']);
+        }])->first();
+    }
 }
