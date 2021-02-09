@@ -117,6 +117,14 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
             // 刪除
             $router->delete('/{id}', 'ShoppingCartController@destroy');
         });
+
+        // 商品列表
+        $router->group(['namespace' => 'Product', 'prefix' => 'product'], function () use ($router) {
+            // 新增
+            $router->post('/', 'ProductController@store');
+            // 修改
+            $router->put('/{product_uuid}', 'ProductController@update');
+        });
     });
 
     /*

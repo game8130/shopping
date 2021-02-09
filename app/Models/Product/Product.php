@@ -8,8 +8,8 @@ use App\Models\Category\Category3;
 class Product extends LumenShoppingModel
 {
     protected $table = 'product';
-    protected $fillable = ['uuid', 'category3_id', 'name', 'description',
-        'suggested_price', 'price', 'residual'];
+    protected $fillable = ['uuid', 'category3_id', 'image', 'name', 'description',
+        'suggested_price', 'price', 'residual', 'active'];
 
     public function category3()
     {

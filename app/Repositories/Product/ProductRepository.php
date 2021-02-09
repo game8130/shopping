@@ -35,4 +35,14 @@ class ProductRepository
             $query->with(['category2']);
         }])->first();
     }
+
+    /**
+     * @param string $uuid
+     * @param array $parameters
+     * @return mixed
+     */
+    public function updateWhereUuid($uuid, array $parameters = [])
+    {
+        return Product::where('uuid', $uuid)->update($parameters);
+    }
 }

@@ -48,4 +48,51 @@ class ProductController extends Controller
         ]);
         return $this->responseWithJson($request, $this->productServices->detail($request->all()));
     }
+
+    /**
+     * 新增
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'category3_id' => 'required|exists:category3,id',
+            'image' => 'required|mimes:jpeg,bmp,png,jpg',
+            'name' => 'required|max:60',
+            'description' => 'required',
+            'suggested_price' => 'required|numeric',
+            'price' => 'required|numeric',
+            'residual' => 'required|numeric',
+            'active'   => 'required|in:1,2',
+        ]);
+        return $this->responseWithJson($request, $this->productServices->store($request->all()));
+    }
+
+    /**
+     * 修改
+     *
+     * @param Request $request
+     * @param $product_uuid
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request, $product_uuid)
+    {
+        $request['uuid'] = $product_uuid;
+        $this->validate($request, [
+            'uuid' => 'required|exists:product,uuid',
+            'category3_id' => 'required|exists:category3,id',
+            'image' => 'required|mimes:jpeg,bmp,png,jpg',
+            'name' => 'required|max:60',
+            'description' => 'required',
+            'suggested_price' => 'required|numeric',
+            'price' => 'required|numeric',
+            'residual' => 'required|numeric',
+            'active'   => 'required|in:1,2'
+        ]);
+        return $this->responseWithJson($request, $this->productServices->update($request->all()));
+    }
 }
