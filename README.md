@@ -26,3 +26,9 @@ The Lumen framework is open-sourced software licensed under the [MIT license](ht
 # run localhost
 
 php -S 0.0.0.0:8090 -d public/index.php -t public
+
+# 在公共區域下開圖片路徑
+
+在public路徑下輸入:
+
+ln -s ../storage/app/public storage

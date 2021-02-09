@@ -26,6 +26,7 @@ class CreateProductTable extends Migration
             $table->unsignedInteger('suggested_price')->comment('建議售價');
             $table->unsignedInteger('price')->comment('售價');
             $table->unsignedSmallInteger('residual')->default(0)->comment('目前剩餘數量');
+            $table->unsignedTinyInteger('active')->default(1)->comment('狀態(1:啟用,2:停用,3:刪除)');
             $table->timestamps();
         });
         DB::statement("ALTER TABLE `" . $this->table . "` COMMENT '產品'");
