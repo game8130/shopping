@@ -1,33 +1,41 @@
-# Lumen PHP Framework
+## 1. 下載代碼
+> git clone https://github.com/game8130/lumen-shopping.git
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+## 2. 安裝擴展依賴包
+> composer install
+## 3. 生成配置文件
+> cp .env.example .env
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+##### 你可以根據情況修改 .env 文件里的内容，如數據庫連接、緩存、郵件設置等：
 
-## Official Documentation
+```
+APP_URL=http://lumen_shopping.test
+...
+DB_HOST=localhost
+DB_DATABASE=lumen_shopping
+DB_USERNAME=homestead
+DB_PASSWORD=secret
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+DOMAIN=.bos-erp.test
+```
 
-## Contributing
+## 4. 生成數據表
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+> php artisan migrate
+## 5. 生成測試數據
 
-## Security Vulnerabilities
+> php artisan db:seed
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+## 6. 生成秘鑰
+> php artisan key:generate
+> php artisan jwt:secret
 
-## License
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-# run localhost
+## run localhost
 
 php -S 0.0.0.0:8090 -d public/index.php -t public
 
-# 在公共區域下開圖片路徑
+## 在公共區域下開圖片路徑
 
 在public路徑下輸入:
 
