@@ -180,7 +180,7 @@ class UserServices
     {
         try {
             $clearToken = false;
-            $user = $this->usersRepository->getByUuid($request['uuid']);
+            $user = $this->usersRepository->findByUUID($request['uuid']);
             // 最高管理員無法修改
             if (in_array($user['account'], [config('default.adminAccount')])) {
                 return [
@@ -221,7 +221,7 @@ class UserServices
     public function destroy(array $request)
     {
         try {
-            $user = $this->usersRepository->getByUuid($request['uuid']);
+            $user = $this->usersRepository->findByUUID($request['uuid']);
             // 最高管理員無法刪除
             if (in_array($user['account'], [config('default.adminAccount')])) {
                 return [

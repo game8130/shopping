@@ -50,18 +50,6 @@ trait Repository
     }
 
     /**
-     * 取得單筆資料(用uuid)
-     *
-     * @param  string  $uuid    [搜尋條件欄位名稱]
-     * @param  array   $field   [要搜尋的欄位, Ex.['id', 'name']]
-     * @return mixed
-     */
-    public function getByUuid($uuid, $field = ['*'])
-    {
-        return $this->entity::select($field)->where('uuid', $uuid)->first();
-    }
-
-    /**
      * 取得單筆資料
      *
      * @param  integer  $id  [PK]
@@ -73,11 +61,11 @@ trait Repository
     }
 
     /**
-     * 取得單筆資料(用商品uuid)
+     * 取得單筆資料(用uuid)
      *
-     * @param  string   $uuid     [商品uuid]
-     * @param  array     $field   [要取得的欄位資料]
-     * @return boolean
+     * @param  string  $uuid    [搜尋條件欄位名稱]
+     * @param  array   $field   [要搜尋的欄位, Ex.['id', 'name']]
+     * @return mixed
      */
     public function findByUUID($uuid, $field = ['*'])
     {

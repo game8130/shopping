@@ -59,7 +59,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'category3_id' => 'required|exists:category3,id',
+            'category3_uuid' => 'required|exists:category3,uuid',
             'image' => 'required|mimes:jpeg,bmp,png,jpg',
             'name' => 'required|max:60',
             'description' => 'required',
@@ -84,8 +84,7 @@ class ProductController extends Controller
         $request['uuid'] = $product_uuid;
         $this->validate($request, [
             'uuid' => 'required|exists:product,uuid',
-            'category3_id' => 'required|exists:category3,id',
-            'image' => 'required|mimes:jpeg,bmp,png,jpg',
+            'category3_uuid' => 'required|exists:category3,uuid',
             'name' => 'required|max:60',
             'description' => 'required',
             'suggested_price' => 'required|numeric',
