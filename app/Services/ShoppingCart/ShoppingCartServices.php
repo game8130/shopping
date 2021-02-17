@@ -21,9 +21,23 @@ class ShoppingCartServices
     public function index(array $request)
     {
         try {
+            $shoppingCarts = $this->shoppingCartRepository->getWithProduct($request['jwt_user']['id']);
+            $number = $suggestedPrice = $price = 0;
+            foreach ($shoppingCarts as $shoppingCart) {
+                $number += $shoppingCart['number'];
+                $suggestedPrice += $shoppingCart['number'] * $shoppingCart['product']['suggested_price'];
+                $price += $shoppingCart['number'] * $shoppingCart['product']['price'];
+            }
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->shoppingCartRepository->getWithProduct($request['jwt_user']['id']),
+                'result' => [
+                    'data' => $shoppingCarts,
+                    'total' => [
+                        'number' => $number,
+                        'suggested_price' => $suggestedPrice,
+                        'price' => $price,
+                    ]
+                ],
             ];
         } catch (\Exception $e) {
             return [

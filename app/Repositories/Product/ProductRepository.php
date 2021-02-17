@@ -15,14 +15,17 @@ class ProductRepository
     }
 
     /**
-     * @param $uuid
+     * @param $request
      * @return mixed
      */
-    public function paginateJoinCategory3($uuid)
+    public function paginateJoinCategory3($request)
     {
-        return Product::select('product.*')->where('category3.uuid', $uuid)
-            ->join('category3', 'category3.id', '=', 'product.category3_id')
-            ->paginate(config('common.web.paginate'));
+        $product = Product::select('product.*')->where('category3.uuid', $request['uuid'])
+            ->join('category3', 'category3.id', '=', 'product.category3_id');
+        if($request['active'] == 1) {
+            $product->where('active', 1);
+        }
+        return $product->paginate(config('common.web.paginate'));
     }
 
     /**

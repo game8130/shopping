@@ -75,7 +75,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
     // 商品列表
     $router->group(['namespace' => 'Product', 'prefix' => 'product'], function () use ($router) {
         // 列表
-        $router->get('/{category3_uuid}', 'ProductController@index');
+        $router->get('/{active}/{category3_uuid}', 'ProductController@index');
         // 詳情
         $router->get('/detail/{product_uuid}', 'ProductController@detail');
     });
