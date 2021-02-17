@@ -30,7 +30,7 @@ class ProductServices
         try {
             return [
                 'code'   => config('apiCode.success'),
-                'result' => $this->productRepository->paginateJoinCategory3($request['uuid']),
+                'result' => $this->productRepository->paginateJoinCategory3($request),
             ];
         } catch (\Exception $e) {
             return [

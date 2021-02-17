@@ -19,14 +19,17 @@ class ProductController extends Controller
      * 查詢
      *
      * @param Request $request
+     * @param $active
      * @param $category3_uuid
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function index(Request $request, $category3_uuid)
+    public function index(Request $request, $active, $category3_uuid)
     {
+        $request['active'] = $active;
         $request['uuid'] = $category3_uuid;
         $this->validate($request, [
+            'active' => 'required|in:0,1',
             'uuid' => 'required|exists:category3,uuid',
         ]);
         return $this->responseWithJson($request, $this->productServices->index($request->all()));
