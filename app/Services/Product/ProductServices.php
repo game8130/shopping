@@ -25,6 +25,29 @@ class ProductServices
      * @param array $request
      * @return array
      */
+    public function search(array $request)
+    {
+        try {
+            $result = [];
+            if (isset($request['q']) && !empty($request['q'])) {
+                $result = $this->productRepository->getWhereName($request['q']);
+            }
+            return [
+                'code'   => config('apiCode.success'),
+                'result' => $result,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'code'  => $e->getCode() ?? config('apiCode.notAPICode'),
+                'error' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * @param array $request
+     * @return array
+     */
     public function index(array $request)
     {
         try {

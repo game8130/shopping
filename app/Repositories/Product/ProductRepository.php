@@ -48,4 +48,14 @@ class ProductRepository
     {
         return Product::where('uuid', $uuid)->update($parameters);
     }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getWhereName($name)
+    {
+        return Product::where('name','like','%'.$name.'%')
+            ->paginate(config('common.web.paginate'));
+    }
 }
