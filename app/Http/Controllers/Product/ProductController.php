@@ -87,6 +87,24 @@ class ProductController extends Controller
     }
 
     /**
+     * 修改圖片
+     *
+     * @param Request $request
+     * @param $product_uuid
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updateImage(Request $request, $product_uuid)
+    {
+        $request['uuid'] = $product_uuid;
+        $this->validate($request, [
+            'uuid' => 'required|exists:product,uuid',
+            'image' => 'required|mimes:jpeg,bmp,png,jpg',
+        ]);
+        return $this->responseWithJson($request, $this->productServices->updateImage($request->all()));
+    }
+
+    /**
      * 修改
      *
      * @param Request $request

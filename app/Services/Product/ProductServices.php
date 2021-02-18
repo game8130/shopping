@@ -122,6 +122,34 @@ class ProductServices
      * @param array $request
      * @return array
      */
+    public function updateImage(array $request)
+    {
+        try {
+            $product = $this->productRepository->findByUUID($request['uuid']);
+            if (isset($product['image']) && !empty($product['image'])) {
+                Storage::delete('/public/' . $product['image']);
+            }
+            $Ym = Carbon::today()->format('Ym');
+            $storagePath = Storage::put('/public/product/' . $Ym, $request['image']);
+            $fileName = 'product/' . $Ym . '/' . basename($storagePath);
+            return [
+                'code'   => config('apiCode.success'),
+                'result' => $this->productRepository->updateWhereUuid($request['uuid'], [
+                    'image' => $fileName,
+                ]),
+            ];
+        } catch (\Exception $e) {
+            return [
+                'code'  => $e->getCode() ?? config('apiCode.notAPICode'),
+                'error' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * @param array $request
+     * @return array
+     */
     public function update(array $request)
     {
         try {
