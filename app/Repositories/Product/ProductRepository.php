@@ -56,6 +56,7 @@ class ProductRepository
     public function getWhereName($name)
     {
         return Product::where('name','like','%'.$name.'%')
+            ->where('active', 1)
             ->paginate(config('common.web.paginate'))
             ->appends(['q' => $name]);
     }
