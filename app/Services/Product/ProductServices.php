@@ -158,7 +158,6 @@ class ProductServices
                 'code'   => config('apiCode.success'),
                 'result' => $this->productRepository->updateWhereUuid($request['uuid'], [
                     'category3_id'    => $category3['id'],
-                    'uuid'            => (string) Str::uuid(),
                     'name'            => $request['name'],
                     'description'     => $request['description'],
                     'suggested_price' => $request['suggested_price'],
