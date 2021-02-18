@@ -16,6 +16,18 @@ class ProductController extends Controller
     }
 
     /**
+     * 搜尋
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function search(Request $request)
+    {
+        return $this->responseWithJson($request, $this->productServices->search($request->all()));
+    }
+
+    /**
      * 查詢
      *
      * @param Request $request
