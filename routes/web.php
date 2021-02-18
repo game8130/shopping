@@ -125,7 +125,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
             // 新增
             $router->post('/', 'ProductController@store');
             // 修改圖片
-            $router->post('/{product_uuid}', 'ProductController@updateImage');
+            $router->post('/image/{product_uuid}', 'ProductController@updateImage');
             // 修改
             $router->put('/{product_uuid}', 'ProductController@update');
         });
