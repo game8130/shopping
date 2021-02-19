@@ -23,10 +23,12 @@ class ShoppingCartServices
         try {
             $shoppingCarts = $this->shoppingCartRepository->getWithProduct($request['jwt_user']['id']);
             $number = $suggestedPrice = $price = 0;
-            foreach ($shoppingCarts as $shoppingCart) {
-                $number += $shoppingCart['number'];
-                $suggestedPrice += $shoppingCart['number'] * $shoppingCart['product']['suggested_price'];
-                $price += $shoppingCart['number'] * $shoppingCart['product']['price'];
+            if ($shoppingCarts->count() != 0) {
+                foreach ($shoppingCarts as $shoppingCart) {
+                    $number += $shoppingCart['number'];
+                    $suggestedPrice += $shoppingCart['number'] * $shoppingCart['product']['suggested_price'];
+                    $price += $shoppingCart['number'] * $shoppingCart['product']['price'];
+                }
             }
             return [
                 'code'   => config('apiCode.success'),
