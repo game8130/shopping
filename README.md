@@ -28,6 +28,7 @@ DOMAIN=.bos-erp.test
 
 ## 6. 生成秘鑰
 > php artisan key:generate
+> 
 > php artisan jwt:secret
 
 
